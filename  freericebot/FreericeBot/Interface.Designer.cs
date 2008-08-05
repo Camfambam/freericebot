@@ -1,6 +1,6 @@
 ﻿namespace FreericeBot
 {
-    partial class Form1
+    partial class Interface
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.Console = new System.Windows.Forms.TextBox();
+            this.SuspendLayout();
+            // 
+            // Console
+            // 
+            this.Console.BackColor = System.Drawing.SystemColors.Window;
+            this.Console.Location = new System.Drawing.Point(12, 12);
+            this.Console.Multiline = true;
+            this.Console.Name = "Console";
+            this.Console.ReadOnly = true;
+            this.Console.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.Console.Size = new System.Drawing.Size(980, 485);
+            this.Console.TabIndex = 0;
+            // 
+            // Interface
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1004, 509);
+            this.Controls.Add(this.Console);
+            this.Name = "Interface";
             this.Text = "Form1";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.TextBox Console;
     }
 }
 
