@@ -11,25 +11,22 @@ namespace FreericeBot
 {
     class StatusNotOK : Exception
         {
-        public StatusNotOK()
+        private readonly HttpStatusCode m_statusCode;
+        
+        public StatusNotOK(HttpStatusCode statusCode)
             {
-            }
-        public StatusNotOK(string message) : base(message)
-            {
-            }
-        public StatusNotOK(string message, Exception inner) : base(message, inner)
-            {
+            m_statusCode = statusCode;
             }
 
+        public HttpStatusCode GetStatusCode()
+            {
+            return m_statusCode;
+            }
         }
+
 
     class WebRequestWrapper
         {
-        private enum StatusCodes
-            {
-            OK = 200
-            }
-
         public string GetStringRepresentationOfSite(string site)
             {
             WebRequest request = WebRequest.Create(site);
@@ -57,9 +54,9 @@ namespace FreericeBot
             
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             
-            if((int)response.StatusCode != (int)StatusCodes.OK)
+            if(response.StatusCode != HttpStatusCode.OK)
                 {
-                throw new StatusNotOK("Code returned " + response.StatusCode);
+                throw new StatusNotOK(response.StatusCode);
                 }
 
             Stream dataStream = response.GetResponseStream();
