@@ -14,20 +14,28 @@ namespace FreericeBot
         public Interface()
         {
             InitializeComponent();
+            Random r = new Random();
 
             for (int i = 0; i < 2; i++ )
                 {
-                Console.AppendText(Freerice_Site_Interaction.GetLookupWord() + "\r\n\t");
+                string word = Freerice_Site_Interaction.GetLookupWord();
+                Console.AppendText("Word: " + word + "\r\n");
 
-                foreach (string s in Freerice_Site_Interaction.GetPossibleAnswers())
+                Console.AppendText("\tAnswers: ");
+                string[] answers = Freerice_Site_Interaction.GetPossibleAnswers();
+                foreach (string s in answers)
                     {
-                    Console.AppendText("\"" + s + "\" ");
+                    Console.AppendText("\""+ s + "\" ");
                     }
                 Console.AppendText("\r\n");
-                Console.AppendText("\r\n");
-                Console.AppendText("\r\n");
 
-                Random r = new Random();
+                Console.AppendText("\tSynonyms: ");
+                string[] synonyms = Thesaurus_Site_Interaction.GetSynonymsOfWord(word);
+                foreach (string s in synonyms)
+                {
+                    Console.AppendText("\"" + s + "\" ");
+                }
+                
                 Freerice_Site_Interaction.SubmitAnswer(r.Next(0,3));
 
                 Console.AppendText(
@@ -38,6 +46,11 @@ namespace FreericeBot
                 Console.AppendText(Freerice_Site_Interaction.GetCorrectWordSynonym() + "\r\n");
 
                 Console.AppendText("Rice donated: " + Freerice_Site_Interaction.GetRiceDonated() + "\r\n");
+
+                Console.AppendText("\r\n");
+                Console.AppendText("\r\n");
+                Console.AppendText("\r\n");
+                Console.AppendText("\r\n");
                 //Freerice_Site_Interaction.ReloadSite();
                 }
             
