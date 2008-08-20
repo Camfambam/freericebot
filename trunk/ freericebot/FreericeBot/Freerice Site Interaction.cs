@@ -30,29 +30,27 @@ namespace FreericeBot
             }
         }
 
+    public struct FreericeSiteData
+    {
 
+        public string Word;
+        public string[] Answers;
+        public int riceDonated;
+        public FreericeSiteStatus siteStatus;
+        public string answerPostData;
+    } ;
+
+    public struct FreericeAnswerData
+    {
+        public bool IsAnswerCorrect;
+        public string word;
+        public string Synonym;
+    }
     /// <summary>
     /// Exposes a minimal set of functions to receive only nessary information from freerice.org 
     /// </summary>
     public class Freerice_Site_Interaction
         {
-
-        public struct FreericeSiteData
-            {
-
-            public string Word;
-            public string[] Answers;
-            public int riceDonated;
-            public FreericeSiteStatus siteStatus;
-            public string answerPostData;
-            } ;
-
-        public struct FreericeAnswerData
-            {
-            public bool IsAnswerCorrect;
-            public string word;
-            public string Synonym;
-            }
 
         private const string FreericeUrl = "http://www.freerice.com/index.php";
         private readonly WebRequestWrapper webRequest = new WebRequestWrapper();
