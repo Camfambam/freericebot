@@ -105,10 +105,10 @@ namespace FreericeBot
             {
                 Regex rx =
                     new Regex(
-                        @"<input\ type=hidden\ name=""PAST""\ value=""(?<past>\w*)""\ />.*
-                    <input\ type=hidden\ name=""INFO""\ value=(?<info>\d+)\ />.*
-                    <input\ type=hidden\ name=""INFO2""\ value=(?<info2>\d+)\ />.*
-                    <input\ type=hidden\ name=""INFO3""\ value=""(?<info3>[-&#8217; '\w\s]+)""\ />",
+                        @"<input\ type=hidden\ name=""PAST""\ value=""(?<past>\w*)""\ />\n+
+                    <input\ type=hidden\ name=""INFO""\ value=(?<info>\w+)\ />\n+
+                    <input\ type=hidden\ name=""INFO2""\ value=(?<info2>\d+)\ />\n+
+                    <input\ type=hidden\ name=""INFO3""\ value=""(?<info3>[-&#8217; '\w\s\|]+)""\ />",
                         RegexOptions.Singleline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled);
 
                 string results =
@@ -167,21 +167,21 @@ namespace FreericeBot
         
         public void ResetSite()
             {
-            siteData = webRequest.GetStringRepresentationOfSite(FreericeUrl);
+            siteData = string.Empty;
             }
 
         private void LoadSite()
             {
-            ResetSite();
+            siteData = webRequest.GetStringRepresentationOfSite(FreericeUrl);
             }
 
         private bool IsSiteLoaded()
             {
             if (siteData != string.Empty)
                 {
-                return false;
+                return true;
                 }
-            return true;
+            return false;
             }
 
         private FreericeSiteStatus GetSiteStatus()
@@ -194,6 +194,11 @@ namespace FreericeBot
             const string AtIncorrectAnswerPagePattren = @"<div\ id=""incorrect"">";
             const string AtSiteToSlowPagePattren =
                 @"<div\ id=""errorDisplay"">.*<p>Sorry,\ we\ are\ unable\ to\ process\ rice\ donations\ so\ fast\.</p>";
+
+            if(Regex.IsMatch(siteData, AtSiteToSlowPagePattren, regexOptions))
+                {
+                return FreericeSiteStatus.AtSiteToSlowPage;
+                }
 
             if (Regex.IsMatch(siteData, AtMainPagePattren, regexOptions))
                 {
@@ -208,11 +213,6 @@ namespace FreericeBot
             if (Regex.IsMatch(siteData, AtIncorrectAnswerPagePattren, regexOptions))
                 {
                 return FreericeSiteStatus.AtIncorrectAnswerPage;
-                }
-
-            if(Regex.IsMatch(siteData, AtSiteToSlowPagePattren, regexOptions))
-                {
-                return FreericeSiteStatus.AtSiteToSlowPage;
                 }
 
             return FreericeSiteStatus.UnknownLocation;

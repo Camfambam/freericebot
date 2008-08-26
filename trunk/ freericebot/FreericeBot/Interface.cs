@@ -15,45 +15,22 @@ namespace FreericeBot
         {
             InitializeComponent();
             Random r = new Random();
-
-            for (int i = 0; i < 2; i++ )
-                {
-                string word = Freerice_Site_Interaction.GetLookupWord();
-                Console.AppendText("Word: " + word + "\r\n");
-
-                Console.AppendText("\tAnswers: ");
-                string[] answers = Freerice_Site_Interaction.GetPossibleAnswers();
-                foreach (string s in answers)
-                    {
-                    Console.AppendText("\""+ s + "\" ");
-                    }
-                Console.AppendText("\r\n");
-
-                Console.AppendText("\tSynonyms: ");
-                string[] synonyms = Thesaurus_Site_Interaction.GetSynonymsOfWord(word);
-                foreach (string s in synonyms)
-                {
-                    Console.AppendText("\"" + s + "\" ");
-                }
-                
-                Freerice_Site_Interaction.SubmitAnswer(r.Next(0,3));
-
-                Console.AppendText(
-                    Freerice_Site_Interaction.IsAnswerCorrect() ? "Correct answer" : "Incorrect answer");
-
-                Console.AppendText("\r\n");
-
-                Console.AppendText(Freerice_Site_Interaction.GetCorrectWordSynonym() + "\r\n");
-
-                Console.AppendText("Rice donated: " + Freerice_Site_Interaction.GetRiceDonated() + "\r\n");
-
-                Console.AppendText("\r\n");
-                Console.AppendText("\r\n");
-                Console.AppendText("\r\n");
-                Console.AppendText("\r\n");
-                //Freerice_Site_Interaction.ReloadSite();
-                }
             
+            FreericeBot bot = new FreericeBot();
+            bot.statusUpdate += statusUpdate;
+            bot.Start();
+        }
+
+        private void statusUpdate(string message)
+        {
+            if (InvokeRequired)//required sense we are going to modify controls
+                {
+                    Invoke(new FreericeBot.StatusUpdateHandler(statusUpdate), new object[] { message });
+                }
+            else
+                {
+                Console.AppendText(message + "\r\n");
+                }
         }
     }
 }
