@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FreericeBot.cs" />
     <Compile Include="Interface.cs">
       <SubType>Form</SubType>
     </Compile>
