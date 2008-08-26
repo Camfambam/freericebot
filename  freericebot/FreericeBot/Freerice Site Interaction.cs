@@ -130,7 +130,7 @@ namespace FreericeBot
             {
             ArrayList answers = new ArrayList();
 
-            Regex rx = new Regex(@"<li><noscript><input\ type=""submit""\ name=""SELECTED""\ value=""\ \d\ "">\ </noscript><a\ href=""javascript:\ submitForm\('\d'\)"">(?<answer>[-&#8217; '\w\s]+)</a></li>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            Regex rx = new Regex(@"<li><noscript><input\ type=""submit""\ name=""SELECTED""\ value=""\ \d\ "">\ </noscript><a\ href=""javascript:\ submitForm\('\d'\)"">(?<answer>[-&#8217; '\w\s]+)&nbsp;</a></li>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             for (Match m = rx.Match(siteData); m.Success; m = m.NextMatch())
                 {
                     answers.Add(m.Result("${answer}"));
